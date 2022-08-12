@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+.expenses {
+  background-color: #282c34;
+
+  margin: 1rem 0.8rem;
+  padding: 0.2rem 0.8rem;
+}
