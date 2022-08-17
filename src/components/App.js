@@ -2,6 +2,7 @@ import "./../css/App.css";
 
 import ExpenseItem from "./micro/ExpenseItem";
 import Card from "./micro/Card";
+import NewExpense from "./micro/NewExpense";
 
 function App() {
   const expenses = [
@@ -33,6 +34,7 @@ function App() {
 
   return (
     <Card className="expenses">
+      <NewExpense />
       <ExpenseItem
         title={expenses[0].title}
         year={expenses[0].date.getFullYear()}
