@@ -1,8 +1,11 @@
-import "./../css/App.css";
-
-import ExpenseItem from "./micro/ExpenseItem";
 import Card from "./micro/Card";
+import ExpensesFilter from "./micro/ExpensesFilter";
+import ExpenseItem from "./micro/ExpenseItem";
 import NewExpense from "./micro/NewExpense";
+
+import { useState } from "react";
+
+import "./../css/App.css";
 
 function App() {
   const expenses = [
@@ -32,9 +35,21 @@ function App() {
     },
   ];
 
+  const newExpense = (data) => {
+    expenses.push(data);
+    console.log(expenses);
+  };
+
+  const [yearFilter, setYearFilter] = useState("2020");
+  const saveYearFilter = (year) => {
+    setYearFilter(year.target.value);
+    console.log(yearFilter);
+  };
+
   return (
     <Card className="expenses">
-      <NewExpense />
+      <NewExpense onAddExpense={newExpense} />
+      <ExpensesFilter value={yearFilter} onYearSelect={saveYearFilter} />
       <ExpenseItem
         title={expenses[0].title}
         year={expenses[0].date.getFullYear()}

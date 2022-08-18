@@ -4,7 +4,7 @@ import "./../../css/components-css/ExpenseForm.css";
 
 export default ExpenseForm;
 
-function ExpenseForm() {
+function ExpenseForm(props) {
   const [titleVal, setTitleVal] = useState("");
   const titleChangeHandler = (event) => {
     setTitleVal(event.target.value);
@@ -29,7 +29,7 @@ function ExpenseForm() {
       date: new Date(dateVal),
     };
 
-    console.log(newExpenseData);
+    props.onAddExpense(newExpenseData);
 
     setTitleVal("");
     setAmountVal("");

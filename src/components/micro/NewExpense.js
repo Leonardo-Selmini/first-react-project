@@ -4,10 +4,18 @@ import "./../../css/components-css/NewExpense.css";
 
 export default NewExpense;
 
-function NewExpense() {
+function NewExpense(props) {
+  const onAddExpenseHandler = (expense) => {
+    const expenseData = {
+      id: "e5",
+      ...expense,
+    };
+    props.onAddExpense(expenseData);
+  };
+
   return (
     <div className="new-expense">
-      <ExpenseForm />
+      <ExpenseForm onAddExpense={onAddExpenseHandler} />
     </div>
   );
 }
