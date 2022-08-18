@@ -7,7 +7,7 @@ export default NewExpense;
 function NewExpense(props) {
   const onAddExpenseHandler = (expense) => {
     const expenseData = {
-      id: "e5",
+      id: Math.random().toString(),
       ...expense,
     };
     props.onAddExpense(expenseData);

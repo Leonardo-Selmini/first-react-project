@@ -8,7 +8,7 @@ import { useState } from "react";
 import "./../css/App.css";
 
 function App() {
-  const expenses = [
+  const expensesDummy = [
     {
       id: "e1",
       title: "Toilet Paper",
@@ -35,49 +35,43 @@ function App() {
     },
   ];
 
-  const newExpense = (data) => {
-    expenses.push(data);
-    console.log(expenses);
+  const [expenses, setExpenses] = useState(expensesDummy);
+
+  const newExpense = (expense) => {
+    setExpenses((prevExpenses) => {
+      return [...prevExpenses, expense];
+    });
   };
 
   const [yearFilter, setYearFilter] = useState("2020");
   const saveYearFilter = (year) => {
     setYearFilter(year.target.value);
-    console.log(yearFilter);
   };
+
+  const filteredExpenses = expenses.filter(
+    (expense) => expense.date.getFullYear().toString() === yearFilter
+  );
 
   return (
     <Card className="expenses">
       <NewExpense onAddExpense={newExpense} />
       <ExpensesFilter value={yearFilter} onYearSelect={saveYearFilter} />
-      <ExpenseItem
-        title={expenses[0].title}
-        year={expenses[0].date.getFullYear()}
-        day={expenses[0].date.getDay()}
-        month={expenses[0].date.toLocaleString("en-US", { month: "long" })}
-        amount={expenses[0].amount}
-      />
-      <ExpenseItem
-        title={expenses[1].title}
-        year={expenses[1].date.getFullYear()}
-        day={expenses[1].date.getDay()}
-        month={expenses[1].date.toLocaleString("en-US", { month: "long" })}
-        amount={expenses[1].amount}
-      />
-      <ExpenseItem
-        title={expenses[2].title}
-        year={expenses[2].date.getFullYear()}
-        day={expenses[2].date.getDay()}
-        month={expenses[2].date.toLocaleString("en-US", { month: "long" })}
-        amount={expenses[2].amount}
-      />
-      <ExpenseItem
-        title={expenses[3].title}
-        year={expenses[3].date.getFullYear()}
-        day={expenses[3].date.getDay()}
-        month={expenses[3].date.toLocaleString("en-US", { month: "long" })}
-        amount={expenses[3].amount}
-      />
+      {filteredExpenses.length === 0 ? (
+        <div>
+          <p>No expenses found.</p>
+        </div>
+      ) : (
+        filteredExpenses.map((expense) => (
+          <ExpenseItem
+            key={expense.id}
+            title={expense.title}
+            year={expense.date.getFullYear()}
+            day={expense.date.toLocaleString("en-US", { day: "2-digit" })}
+            month={expense.date.toLocaleString("en-US", { month: "long" })}
+            amount={expense.amount}
+          />
+        ))
+      )}
     </Card>
   );
 }
