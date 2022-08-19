@@ -1,4 +1,5 @@
 import Card from "./micro/Card";
+import ExpenseChart from "./micro/ExpensesChart";
 import ExpensesFilter from "./micro/ExpensesFilter";
 import ExpenseItem from "./micro/ExpenseItem";
 import NewExpense from "./micro/NewExpense";
@@ -52,26 +53,31 @@ function App() {
     (expense) => expense.date.getFullYear().toString() === yearFilter
   );
 
+  let contentToRender = (
+    <div>
+      <p>No expenses found.</p>
+    </div>
+  );
+
+  if (filteredExpenses.length > 0) {
+    contentToRender = filteredExpenses.map((expense) => (
+      <ExpenseItem
+        key={expense.id}
+        title={expense.title}
+        year={expense.date.getFullYear()}
+        day={expense.date.toLocaleString("en-US", { day: "2-digit" })}
+        month={expense.date.toLocaleString("en-US", { month: "long" })}
+        amount={expense.amount}
+      />
+    ));
+  }
+
   return (
     <Card className="expenses">
       <NewExpense onAddExpense={newExpense} />
+      <ExpenseChart expenses={filteredExpenses} />
       <ExpensesFilter value={yearFilter} onYearSelect={saveYearFilter} />
-      {filteredExpenses.length === 0 ? (
-        <div>
-          <p>No expenses found.</p>
-        </div>
-      ) : (
-        filteredExpenses.map((expense) => (
-          <ExpenseItem
-            key={expense.id}
-            title={expense.title}
-            year={expense.date.getFullYear()}
-            day={expense.date.toLocaleString("en-US", { day: "2-digit" })}
-            month={expense.date.toLocaleString("en-US", { month: "long" })}
-            amount={expense.amount}
-          />
-        ))
-      )}
+      {contentToRender}
     </Card>
   );
 }

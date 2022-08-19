@@ -36,6 +36,19 @@ function ExpenseForm(props) {
     setDateVal("");
   };
 
+  const [isClosed, setIsClosed] = useState(true);
+
+  const toggleModalClickHandler = () => {
+    setIsClosed((prev) => {
+      return !prev;
+    });
+    // console.log(isClosed);
+  };
+
+  if (isClosed) {
+    return <button onClick={toggleModalClickHandler}>Add new expense</button>;
+  }
+
   return (
     <form onSubmit={formSubmitHandler}>
       <div className="new-expense__controls">
@@ -64,8 +77,10 @@ function ExpenseForm(props) {
             onChange={dateChangeHandler}
           />
         </div>
-
-        <button type="submit">Add Expense</button>
+        <button onClick={toggleModalClickHandler}>Cancel</button>
+        <button type="submit" onClick={toggleModalClickHandler}>
+          Add Expense
+        </button>
       </div>
     </form>
   );
