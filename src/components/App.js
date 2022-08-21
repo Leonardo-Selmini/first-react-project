@@ -3,6 +3,7 @@ import ExpenseChart from "./micro/ExpensesChart";
 import ExpensesFilter from "./micro/ExpensesFilter";
 import ExpenseItem from "./micro/ExpenseItem";
 import NewExpense from "./micro/NewExpense";
+import Spline from "@splinetool/react-spline";
 
 import { useState } from "react";
 
@@ -74,6 +75,7 @@ function App() {
 
   return (
     <Card className="expenses">
+      <Spline scene="https://prod.spline.design/HyW0AxJZPTasOTp1/scene.splinecode" />
       <NewExpense onAddExpense={newExpense} />
       <ExpenseChart expenses={filteredExpenses} />
       <ExpensesFilter value={yearFilter} onYearSelect={saveYearFilter} />
